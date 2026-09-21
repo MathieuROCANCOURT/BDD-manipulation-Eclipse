@@ -1,3 +1,6 @@
+*.classpath
+*.project
+
 # Created by https://www.toptal.com/developers/gitignore/api/eclipse,java,visualstudio,intellij,sonarqube
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,java,visualstudio,intellij,sonarqube
 
