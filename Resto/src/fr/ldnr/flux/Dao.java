@@ -17,7 +17,7 @@ public abstract class Dao<T> {
 
 	public abstract boolean create(T obj);
 
-	public abstract T read(int idj);
+	public abstract T read(int id);
 
 	public abstract boolean update(T obj);
 
