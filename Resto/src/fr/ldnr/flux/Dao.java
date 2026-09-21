@@ -3,15 +3,23 @@
  */
 package fr.ldnr.flux;
 
+import java.sql.Connection;
+
 /**
  * 
  */
-public interface Dao<T> {
-	public void create(T obj);
-	
-	public void read(T obj);
-	
-	public void update(T obj);
-	
-	public void delete(T obj);
+public abstract class Dao<T> {
+	protected Connection connect = null;
+
+	public Dao(Connection conn){
+	    this.connect = conn;
+	}
+
+	public abstract boolean create(T obj);
+
+	public abstract T read(int idj);
+
+	public abstract boolean update(T obj);
+
+	public abstract boolean delete(T obj);
 }
