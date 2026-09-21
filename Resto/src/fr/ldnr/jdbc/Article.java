@@ -12,6 +12,9 @@ public class Article {
 	private String brand;
 	private float price;
 	
+	public Article() {
+	}
+	
 	public Article(int id, String description, String brand, float price) {
 		this.id = id;
 		this.description = description;
