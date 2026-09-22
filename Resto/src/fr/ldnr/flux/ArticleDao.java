@@ -3,6 +3,8 @@
  */
 package fr.ldnr.flux;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.*;
 import java.sql.Connection;
@@ -41,6 +43,25 @@ public class ArticleDao implements Dao<Article> {
 	}
 
 	@Override
+	public List<Article> readAll() throws SQLException {
+		List<Article> listArticle = new ArrayList<Article>();
+		String execute = "SELECT IdArticle, Description, Brand, UnitaryPrice FROM t_articles;";
+
+		try (PreparedStatement ps = this.getConnection().prepareStatement(execute)) {
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					listArticle.add(new Article(rs.getInt("IdArticle"), rs.getString("Description"),
+							rs.getString("Brand"), rs.getFloat("UnitaryPrice")));
+				}
+			}
+		} catch (SQLException e) {
+			Logger logger = Logger.getAnonymousLogger();
+			logger.warning(e.getLocalizedMessage());
+		}
+		return listArticle;
+	}
+
+	@Override
 	public Article read(int id) throws SQLException {
 		Article article = new Article();
 		String execute = "SELECT Description, Brand, UnitaryPrice FROM t_articles WHERE idArticle = ?;";
@@ -66,5 +87,4 @@ public class ArticleDao implements Dao<Article> {
 
 	public void delete(Article obj) {
 	}
-
 }
