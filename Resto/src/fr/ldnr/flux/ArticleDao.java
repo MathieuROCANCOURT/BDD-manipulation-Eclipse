@@ -118,6 +118,16 @@ public class ArticleDao implements Dao<Article> {
 		}
 	}
 
-	public void delete(Article obj) {
+	@Override
+	public void delete(Article article) {
+		String execute = "DELETE FROM t_articles WHERE idArticle = ?;";
+
+		try (PreparedStatement ps = this.getConnection().prepareStatement(execute)) {
+			ps.setInt(1, article.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger logger = Logger.getAnonymousLogger();
+			logger.warning("Error delete article request: " + e.getLocalizedMessage());
+		}
 	}
 }
