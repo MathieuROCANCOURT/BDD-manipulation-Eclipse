@@ -32,6 +32,9 @@ public class TestJdbc {
 			}
 			System.out.println("-------------------------------------------------------------");
 			
+			article.setDescription("CD-ROM 32 bits");
+			articleDao.update(article);
+			
 			System.out.println(articleDao.read(2));
 		} catch (SQLException e) {
 			Logger logger = Logger.getAnonymousLogger();
