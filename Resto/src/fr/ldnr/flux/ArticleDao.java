@@ -36,12 +36,7 @@ public class ArticleDao implements Dao<Article> {
 	 * 
 	 */
 	public ArticleDao(Connection conn) {
-		super(conn);
-	}
-
-	@Override
-	public boolean create(Article obj) {
-		return false;
+	public void create(Article obj) {
 	}
 
 	@Override
@@ -69,14 +64,10 @@ public class ArticleDao implements Dao<Article> {
 		return article;
 	}
 
-	@Override
-	public boolean update(Article obj) {
-		return false;
+	public void update(Article obj) {
 	}
 
-	@Override
-	public boolean delete(Article obj) {
-		return false;
+	public void delete(Article obj) {
 	}
 
 }
