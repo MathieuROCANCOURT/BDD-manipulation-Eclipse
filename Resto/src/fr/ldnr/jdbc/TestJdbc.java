@@ -36,6 +36,10 @@ public class TestJdbc {
 			articleDao.update(article);
 			
 			System.out.println(articleDao.read(2));
+			
+			for (int index = 12; index < listArticles.size(); index++) {
+				articleDao.delete(listArticles.get(index));
+			}
 		} catch (SQLException e) {
 			Logger logger = Logger.getAnonymousLogger();
 			logger.severe(e.getLocalizedMessage());
