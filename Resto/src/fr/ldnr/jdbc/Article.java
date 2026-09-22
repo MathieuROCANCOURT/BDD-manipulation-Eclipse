@@ -21,4 +21,9 @@ public class Article {
 		this.brand = brand;
 		this.price = price;
 	}
+	
+	@Override
+	public String toString() {
+		return "Article " + this.id + ": " + this.description + ", marque: " + this.brand + ", prix: " + this.price + '.';
+	}
 }
