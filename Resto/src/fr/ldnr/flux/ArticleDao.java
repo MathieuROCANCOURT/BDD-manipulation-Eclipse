@@ -5,7 +5,6 @@ package fr.ldnr.flux;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -40,7 +39,8 @@ public class ArticleDao implements Dao<Article> {
 	/**
 	 * 
 	 */
-	public void create(Article article) {
+	@Override
+	public void create(Article article) throws SQLException {
 		String execute = "INSERT INTO t_articles(Description, Brand, UnitaryPrice) VALUES (?,?,?);";
 
 		try (PreparedStatement ps = this.getConnection().prepareStatement(execute, Statement.RETURN_GENERATED_KEYS)) {
@@ -102,7 +102,20 @@ public class ArticleDao implements Dao<Article> {
 		return article;
 	}
 
-	public void update(Article obj) {
+	@Override
+	public void update(Article article) throws SQLException {
+		String execute = "UPDATE t_articles SET Description = ?, Brand = ?, UnitaryPrice = ? WHERE idArticle = ?;";
+
+		try (PreparedStatement ps = this.getConnection().prepareStatement(execute)) {
+			ps.setString(1, article.getDescription());
+			ps.setString(2, article.getBrand());
+			ps.setFloat(3, article.getPrice());
+			ps.setInt(4, article.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			Logger logger = Logger.getAnonymousLogger();
+			logger.warning("Error update article request: " + e.getLocalizedMessage());
+		}
 	}
 
 	public void delete(Article obj) {
