@@ -22,6 +22,9 @@ public class TestJdbc {
 		ArticleDao articleDao = new ArticleDao();
 
 		try (Connection conenction = articleDao.getConnection()) {
+			Article article = new Article("Disquette", "IBM", 1.43f);
+			articleDao.create(article);
+			
 			List<Article> listArticles = articleDao.readAll();
 			System.out.println("--------- Voici la liste de toutes les articles --------------");
 			for (int index = 0; index < listArticles.size(); index++) {
@@ -29,8 +32,7 @@ public class TestJdbc {
 			}
 			System.out.println("-------------------------------------------------------------");
 			
-			Article article = articleDao.read(2);
-			System.out.println(article);
+			System.out.println(articleDao.read(2));
 		} catch (SQLException e) {
 			Logger logger = Logger.getAnonymousLogger();
 			logger.severe(e.getLocalizedMessage());
