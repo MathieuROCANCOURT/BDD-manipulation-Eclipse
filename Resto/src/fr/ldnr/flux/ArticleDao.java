@@ -41,8 +41,8 @@ public class ArticleDao implements Dao<Article> {
 	}
 
 	@Override
-	public Optional<Article> read(int id) throws SQLException {
-		Optional<Article> article = Optional.empty();
+	public Article read(int id) throws SQLException {
+		Article article = new Article();
 		String execute = "SELECT Description, Brand, UnitaryPrice FROM t_articles WHERE idArticle = ?;";
 
 		try (PreparedStatement ps = this.getConnection().prepareStatement(execute)) {
@@ -50,8 +50,8 @@ public class ArticleDao implements Dao<Article> {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
-					article = Optional.of(new Article(id, rs.getString("Description"), rs.getString("Brand"),
-							rs.getFloat("UnitaryPrice")));
+					article = new Article(id, rs.getString("Description"), rs.getString("Brand"),
+							rs.getFloat("UnitaryPrice"));
 				}
 			}
 		} catch (SQLException e) {
