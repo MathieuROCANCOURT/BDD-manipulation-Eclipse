@@ -3,24 +3,18 @@
  */
 package fr.ldnr.flux;
 
-import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 
 /**
  * 
  */
-abstract class Dao<T> {
-	protected Connection connect = null;
+public interface Dao<T> {
+	public void create(T t);
 
-	protected Dao(Connection conn){
-	    this.connect = conn;
-	}
+	public Optional<T> read(int id) throws SQLException;
 
-	abstract boolean create(T obj);
+	public void update(T t);
 
-	abstract T read(int id) throws SQLException;
-
-	abstract boolean update(T obj);
-
-	abstract boolean delete(T obj);
+	public void delete(T t);
 }
