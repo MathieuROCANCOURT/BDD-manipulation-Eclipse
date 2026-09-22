@@ -15,6 +15,23 @@ public class Article {
 	public Article() {
 	}
 	
+	/**
+	 * @param description
+	 * @param brand
+	 * @param price
+	 */
+	public Article(String description, String brand, float price) {
+		this.description = description;
+		this.brand = brand;
+		this.price = price;
+	}
+
+	/**
+	 * @param id
+	 * @param description
+	 * @param brand
+	 * @param price
+	 */
 	public Article(int id, String description, String brand, float price) {
 		this.id = id;
 		this.description = description;
