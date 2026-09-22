@@ -5,17 +5,33 @@ package fr.ldnr.flux;
 
 import java.util.logging.*;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import fr.ldnr.jdbc.Article;
 
 /**
  * 
  */
-public class ArticleDao extends Dao<Article> {
+public class ArticleDao implements Dao<Article> {
+	// Database connection details (injected or configured externally in real apps)
+	private static final String URL = "jdbc:mariadb://127.0.0.1/shop";
+	private static final String LOGIN = "root";
+	private static final String PASSWORD = System.getProperty("database.password");
+
+	// Helper method to get a database connection (simplified for example)
+	public Connection getConnection() throws SQLException {
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			Logger logger = Logger.getAnonymousLogger();
+			logger.severe(e.getLocalizedMessage());
+		}
+
+		return DriverManager.getConnection(URL, LOGIN, PASSWORD);
+	}
 	/**
 	 * 
 	 */
