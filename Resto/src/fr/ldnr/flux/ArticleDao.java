@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import fr.ldnr.jdbc.Article;
 
@@ -39,7 +40,26 @@ public class ArticleDao implements Dao<Article> {
 	/**
 	 * 
 	 */
-	public void create(Article obj) {
+	public void create(Article article) {
+		String execute = "INSERT INTO t_articles(Description, Brand, UnitaryPrice) VALUES (?,?,?);";
+
+		try (PreparedStatement ps = this.getConnection().prepareStatement(execute, Statement.RETURN_GENERATED_KEYS)) {
+			ps.setString(1, article.getDescription());
+			ps.setString(2, article.getBrand());
+			ps.setFloat(3, article.getPrice());
+			ps.executeUpdate();
+
+			try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    article.setId(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Insert succeeded but no ID obtained.");
+                }
+            }
+		} catch (SQLException e) {
+			Logger logger = Logger.getAnonymousLogger();
+			logger.warning(e.getLocalizedMessage());
+		}
 	}
 
 	@Override
