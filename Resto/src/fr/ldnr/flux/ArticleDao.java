@@ -19,12 +19,12 @@ import fr.ldnr.jdbc.Article;
  * 
  */
 public class ArticleDao implements Dao<Article> {
-	// Database connection details (injected or configured externally in real apps)
+	// Database connection details
 	private static final String URL = "jdbc:mariadb://127.0.0.1/shop";
 	private static final String LOGIN = "root";
 	private static final String PASSWORD = System.getProperty("database.password");
 
-	// Helper method to get a database connection (simplified for example)
+	// Helper method to get a database connection
 	public Connection getConnection() throws SQLException {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -36,9 +36,6 @@ public class ArticleDao implements Dao<Article> {
 		return DriverManager.getConnection(URL, LOGIN, PASSWORD);
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public void create(Article article) throws SQLException {
 		String execute = "INSERT INTO t_articles(Description, Brand, UnitaryPrice) VALUES (?,?,?);";
@@ -50,12 +47,12 @@ public class ArticleDao implements Dao<Article> {
 			ps.executeUpdate();
 
 			try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    article.setId(generatedKeys.getInt(1));
-                } else {
-                    throw new SQLException("Insert succeeded but no ID obtained.");
-                }
-            }
+				if (generatedKeys.next()) {
+					article.setId(generatedKeys.getInt(1));
+				} else {
+					throw new SQLException("Insert succeeded but no ID obtained.");
+				}
+			}
 		} catch (SQLException e) {
 			Logger logger = Logger.getAnonymousLogger();
 			logger.warning(e.getLocalizedMessage());
